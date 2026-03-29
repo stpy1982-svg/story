@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>昆虫研学互动体验</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe4f3 50%, #e4f7ff 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: #fff;
+            overflow: hidden;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffb347 25%, #ffd93d 50%, #6bcf7f 75%, #4ecdc4 100%);
+            padding: 50px 25px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "🌟";
+            position: absolute;
+            font-size: 45px;
+            top: 15px;
+            left: 15px;
+            animation: twinkle 2s infinite;
+        }
+        
+        .hero-section::after {
+            content: "✨";
+            position: absolute;
+            font-size: 40px;
+            top: 20px;
+            right: 20px;
+            animation: twinkle 2s infinite 0.5s;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.3) rotate(15deg); }
+        }
+        
+        .hero-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+            text-shadow: 3px 3px 0px #ff6b9d, -1px -1px 0px #ffd93d;
+        }
+        
+        .hero-subtitle {
+            font-size: 15px;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .interaction-banner {
+            background: linear-gradient(90deg, #ff6b9d 0%, #ffb347 50%, #ffd93d 100%);
+            color: #fff;
+            padding: 22px;
+            text-align: center;
+            margin: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            border: 3px dashed #fff;
+        }
+        
+        .interaction-banner h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .interaction-banner p {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .section-label {
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            margin-bottom: 20px;
+        }
+        
+        .section-label::before {
+            content: "";
+            width: 6px;
+            height: 30px;
+            background: linear-gradient(180deg, #ff6b9d 0%, #ffd93d 100%);
+            border-radius: 3px;
+            margin-right: 15px;
+        }
+        
+        .section-label h3 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ff6b9d;
+        }
+        
+        .interaction-card {
+            margin: 0 25px 25px;
+            background: #fff;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(255, 107, 157, 0.15);
+            border: 4px solid #ffd93d;
+            transition: transform 0.3s;
+        }
+        
+        .interaction-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .interaction-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+        
+        .interaction-content {
+            padding: 22px;
+        }
+        
+        .interaction-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .interaction-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .interaction-title .emoji {
+            font-size: 36px;
+        }
+        
+        .interaction-title h4 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #333;
+        }
+        
+        .interaction-badge {
+            background: linear-gradient(135deg, #6bcf7f 0%, #4ecdc4 100%);
+            color: #fff;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(107, 207, 127, 0.4);
+        }
+        
+        .interaction-desc {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+        
+        .interaction-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .highlight-point {
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        
+        .highlight-point:nth-child(1) {
+            background: #ff6b9d;
+            color: #fff;
+        }
+        
+        .highlight-point:nth-child(2) {
+            background: #ffb347;
+            color: #fff;
+        }
+        
+        .highlight-point:nth-child(3) {
+            background: #6bcf7f;
+            color: #fff;
+        }
+        
+        .highlight-point:nth-child(4) {
+            background: #4ecdc4;
+            color: #fff;
+        }
+        
+        .game-section {
+            margin: 35px 25px;
+            padding: 28px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 25px;
+            border: 4px solid #ffb347;
+        }
+        
+        .game-section h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ff6b9d;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+        
+        .game-card {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
+        }
+        
+        .game-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        
+        .game-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .game-tag {
+            font-size: 12px;
+            color: #ff6b9d;
+            font-weight: 600;
+            background: #ffe4f3;
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .workshop-section {
+            margin: 35px 25px;
+        }
+        
+        .workshop-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+        
+        .workshop-tab {
+            flex-shrink: 0;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid;
+        }
+        
+        .workshop-tab:nth-child(1) {
+            background: #ffe4f3;
+            color: #ff6b9d;
+            border-color: #ff6b9d;
+        }
+        
+        .workshop-tab:nth-child(2) {
+            background: #fff5e6;
+            color: #ffb347;
+            border-color: #ffb347;
+        }
+        
+        .workshop-tab:nth-child(3) {
+            background: #e4f7ff;
+            color: #4ecdc4;
+            border-color: #4ecdc4;
+        }
+        
+        .workshop-tab:nth-child(4) {
+            background: #f0fff4;
+            color: #6bcf7f;
+            border-color: #6bcf7f;
+        }
+        
+        .workshop-tab.active {
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+        
+        .workshop-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        
+        .workshop-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+            border: 3px solid #ffd93d;
+        }
+        
+        .workshop-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .workshop-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(255, 107, 157, 0.95), transparent);
+            color: #fff;
+        }
+        
+        .workshop-overlay h4 {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+        
+        .workshop-overlay p {
+            font-size: 11px;
+            opacity: 0.95;
+            font-weight: 600;
+        }
+        
+        .moments-section {
+            margin: 35px 25px;
+            background: linear-gradient(135deg, #ffe4f3 0%, #fff5e6 50%, #e4f7ff 100%);
+            border-radius: 25px;
+            padding: 28px;
+            border: 4px solid #ff6b9d;
+        }
+        
+        .moments-section h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ff6b9d;
+            margin-bottom: 18px;
+        }
+        
+        .moments-quote {
+            font-size: 15px;
+            color: #555;
+            line-height: 2;
+            text-align: center;
+            font-style: italic;
+            padding: 18px;
+            background: #fff;
+            border-radius: 18px;
+            border-left: 5px solid #ff6b9d;
+            font-weight: 600;
+        }
+        
+        .moments-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 18px;
+        }
+        
+        .moments-img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .cta-section {
+            padding: 40px 25px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffb347 50%, #ffd93d 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: "🎉";
+            position: absolute;
+            font-size: 50px;
+            top: 20px;
+            left: 30px;
+            animation: twinkle 2.5s infinite;
+        }
+        
+        .cta-section::after {
+            content: "🌈";
+            position: absolute;
+            font-size: 45px;
+            bottom: 20px;
+            right: 25px;
+            animation: twinkle 2.5s infinite 0.7s;
+        }
+        
+        .cta-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .cta-subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 22px 0;
+            background: #fff;
+            color: #ff6b9d;
+            font-size: 20px;
+            font-weight: 800;
+            border-radius: 40px;
+            text-decoration: none;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 5px solid #ffb347;
+            text-align: center;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+            animation: none;
+        }
+        
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #4ecdc4 0%, #6bcf7f 100%);
+            color: #fff;
+            border: 4px solid #fff;
+        }
+        
+        .wechat-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 4px solid #fff;
+        }
+        
+        .wechat-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ff6b9d;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .wechat-qr {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 15px;
+            display: block;
+            border-radius: 15px;
+            border: 3px solid #ff6b9d;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+            object-fit: contain;
+            background: #fff;
+        }
+        
+        .wechat-tips {
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+            text-align: center;
+            background: #fff5f9;
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 2px dashed #ff6b9d;
+        }
+        
+        .time-section {
+            margin: 30px 25px;
+        }
+        
+        .time-button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .time-button {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff 0%, #fff5f9 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.15);
+            border: 3px solid;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .time-button:nth-child(1) {
+            border-color: #ff6b9d;
+        }
+        
+        .time-button:nth-child(2) {
+            border-color: #ffb347;
+        }
+        
+        .time-button:nth-child(3) {
+            border-color: #6bcf7f;
+        }
+        
+        .time-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(255, 107, 157, 0.25);
+        }
+        
+        .time-icon {
+            font-size: 48px;
+            margin-right: 20px;
+            min-width: 60px;
+        }
+        
+        .time-content {
+            flex: 1;
+        }
+        
+        .time-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .time-value {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        
+        .time-button:nth-child(1) .time-value {
+            color: #ff6b9d;
+        }
+        
+        .time-button:nth-child(2) .time-value {
+            color: #ffb347;
+        }
+        
+        .time-button:nth-child(3) .time-value {
+            color: #6bcf7f;
+        }
+        
+        .time-desc {
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #4ecdc4 0%, #6bcf7f 100%);
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .footer p {
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 英雄区域 -->
+        <div class="hero-section">
+            <h1 class="hero-title">昆虫研学·互动乐园</h1>
+            <p class="hero-subtitle">四大主题·趣味互动·精彩体验</p>
+        </div>
+        
+        <!-- 互动体验横幅 -->
+        <div class="interaction-banner">
+            <h2>🎮 每天都有新玩法！</h2>
+            <p>从早到晚，互动不断，让孩子在玩乐中爱上自然探索</p>
+        </div>
+        
+        <!-- 螳螂捕食游戏 -->
+        <div class="section-label">
+            <h3>螳螂主题</h3>
+        </div>
+        <div class="interaction-card">
+            <img src="https://s.coze.cn/image/jBFDvE6D0aI/" alt="螳螂捕食游戏" class="interaction-img">
+            <div class="interaction-content">
+                <div class="interaction-header">
+                    <div class="interaction-title">
+                        <span class="emoji">🦗</span>
+                        <h4>螳螂捕蝉游戏</h4>
+                    </div>
+                    <span class="interaction-badge">上午场</span>
+                </div>
+                <p class="interaction-desc">
+                    10人分组对抗！益虫螳螂、害虫蝉虫、飞鸟黄雀三方阵营，撕取对方生命纸条，最刺激的生态大作战！获胜队伍优先选择探索场地。
+                </p>
+                <div class="interaction-highlights">
+                    <span class="highlight-point">团队协作</span>
+                    <span class="highlight-point">体能挑战</span>
+                    <span class="highlight-point">自然知识</span>
+                    <span class="highlight-point">竞技乐趣</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 蜜蜂授粉游戏 -->
+        <div class="section-label">
+            <h3>蜜蜂主题</h3>
+        </div>
+        <div class="interaction-card">
+            <img src="https://s.coze.cn/image/9HmTF2slhl0/" alt="蜜蜂授粉游戏" class="interaction-img">
+            <div class="interaction-content">
+                <div class="interaction-header">
+                    <div class="interaction-title">
+                        <span class="emoji">🐝</span>
+                        <h4>采花蜜传花粉</h4>
+                    </div>
+                    <span class="interaction-badge">协作游戏</span>
+                </div>
+                <p class="interaction-desc">
+                    完美还原蜜蜂分工！工蜂采蜜、授粉传递、蜂巢守护三大角色，轻走慢动传递花蜜毛球，零对抗、纯协作，秩序感满满。
+                </p>
+                <div class="interaction-highlights">
+                    <span class="highlight-point">角色扮演</span>
+                    <span class="highlight-point">团队配合</span>
+                    <span class="highlight-point">科普学习</span>
+                    <span class="highlight-point">安全互动</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 蝴蝶羽化游戏 -->
+        <div class="section-label">
+            <h3>蝴蝶主题</h3>
+        </div>
+        <div class="interaction-card">
+            <img src="https://s.coze.cn/image/5e6Gn5rkFKs/" alt="蝴蝶羽化游戏" class="interaction-img">
+            <div class="interaction-content">
+                <div class="interaction-header">
+                    <div class="interaction-title">
+                        <span class="emoji">🦋</span>
+                        <h4>羽化成功四步走</h4>
+                    </div>
+                    <span class="interaction-badge">身体互动</span>
+                </div>
+                <p class="interaction-desc">
+                    从卵到蛹到蝶的完整生命周期！老师喊口令，孩子快速做对应动作——抱紧身体当卵，蠕动爬行像毛毛虫，静止不动如蛹，展翅飞舞成蝶！
+                </p>
+                <div class="interaction-highlights">
+                    <span class="highlight-point">身体协调</span>
+                    <span class="highlight-point">快速反应</span>
+                    <span class="highlight-point">生命教育</span>
+                    <span class="highlight-point">趣味记忆</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 桑叶接力赛 -->
+        <div class="section-label">
+            <h3>蚕宝宝主题</h3>
+        </div>
+        <div class="interaction-card">
+            <img src="https://s.coze.cn/image/bh0OU9hcXa8/" alt="桑叶接力赛" class="interaction-img">
+            <div class="interaction-content">
+                <div class="interaction-header">
+                    <div class="interaction-title">
+                        <span class="emoji">🐛</span>
+                        <h4>桑叶接力赛</h4>
+                    </div>
+                    <span class="interaction-badge">活力开场</span>
+                </div>
+                <p class="interaction-desc">
+                    2-3队列阵！手拿桑叶卡片，跑向终点放入蚕宝宝粮仓，击掌接力！比拼速度与秩序，最先完成运送的队伍获胜！
+                </p>
+                <div class="interaction-highlights">
+                    <span class="highlight-point">体能锻炼</span>
+                    <span class="highlight-point">团队接力</span>
+                    <span class="highlight-point">秩序培养</span>
+                    <span class="highlight-point">主题贴合</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 课程时间按钮 -->
+        <div class="time-section">
+            <div class="section-label">
+                <h3>⏰ 课程时间</h3>
+            </div>
+            <div class="time-button-group">
+                <div class="time-button">
+                    <div class="time-icon">🌅</div>
+                    <div class="time-content">
+                        <div class="time-label">上午场</div>
+                        <div class="time-value">10:00-12:00</div>
+                        <div class="time-desc">探索+科普</div>
+                    </div>
+                </div>
+                <div class="time-button">
+                    <div class="time-icon">🍽️</div>
+                    <div class="time-content">
+                        <div class="time-label">午餐午休</div>
+                        <div class="time-value">12:00-13:30</div>
+                        <div class="time-desc">休息用餐</div>
+                    </div>
+                </div>
+                <div class="time-button">
+                    <div class="time-icon">🎨</div>
+                    <div class="time-content">
+                        <div class="time-label">下午场</div>
+                        <div class="time-value">13:30-16:10</div>
+                        <div class="time-desc">手工+食育</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 互动游戏合集 -->
+        <div class="game-section">
+            <h3>🎯 四大互动游戏总览</h3>
+            <div class="game-grid">
+                <div class="game-card">
+                    <div class="game-icon">⚔️</div>
+                    <div class="game-name">螳螂捕食</div>
+                    <div class="game-tag">竞技对抗</div>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🌸</div>
+                    <div class="game-name">采蜜授粉</div>
+                    <div class="game-tag">协作配合</div>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🦋</div>
+                    <div class="game-name">羽化游戏</div>
+                    <div class="game-tag">身体互动</div>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🏃</div>
+                    <div class="game-name">桑叶接力</div>
+                    <div class="game-tag">体能挑战</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 手工互动 -->
+        <div class="workshop-section">
+            <div class="section-label">
+                <h3>🎨 下午手工互动</h3>
+            </div>
+            <div class="workshop-tabs">
+                <span class="workshop-tab active">螳螂微景观</span>
+                <span class="workshop-tab">蜂蜡香薰</span>
+                <span class="workshop-tab">蝴蝶拓印</span>
+                <span class="workshop-tab">蚕丝书签</span>
+            </div>
+            <div class="workshop-content">
+                <div class="workshop-item">
+                    <img src="https://s.coze.cn/image/KmChhjm_GWQ/" alt="螳螂微景观">
+                    <div class="workshop-overlay">
+                        <h4>苔藓生态缸</h4>
+                        <p>分层铺料，模拟自然</p>
+                    </div>
+                </div>
+                <div class="workshop-item">
+                    <img src="https://s.coze.cn/image/zMFmcB6ZYJ0/" alt="蜂蜡香薰">
+                    <div class="workshop-overlay">
+                        <h4>蜂蜡香薰片</h4>
+                        <p>天然蜂蜡，干花装饰</p>
+                    </div>
+                </div>
+                <div class="workshop-item">
+                    <img src="https://s.coze.cn/image/LJHkb9qbOmg/" alt="蝴蝶拓印">
+                    <div class="workshop-overlay">
+                        <h4>鳞粉拓印画</h4>
+                        <p>艺术创作，高颜值</p>
+                    </div>
+                </div>
+                <div class="workshop-item">
+                    <img src="https://s.coze.cn/image/LhKB_UrA97Y/" alt="蚕丝书签">
+                    <div class="workshop-overlay">
+                        <h4>蚕丝书签</h4>
+                        <p>传统工艺，文化传承</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 欢乐时刻 -->
+        <div class="moments-section">
+            <h3>✨ 研学欢乐瞬间</h3>
+            <div class="moments-quote">
+                "在游戏中学习，在互动中成长，让孩子真正爱上自然探索！"
+            </div>
+            <div class="moments-gallery">
+                <img src="https://s.coze.cn/image/WGVD1FTK-Xs/" alt="欢乐场景1" class="moments-img">
+                <img src="https://s.coze.cn/image/7Ve4x0ThY3o/" alt="欢乐场景2" class="moments-img">
+                <img src="https://s.coze.cn/image/L5GdOwWQ-Ig/" alt="欢乐场景3" class="moments-img">
+                <img src="https://s.coze.cn/image/rhrgUFaIAvA/" alt="欢乐场景4" class="moments-img">
+            </div>
+        </div>
+        
+        <!-- 行动召唤 -->
+        <div class="cta-section">
+            <h2 class="cta-title">让孩子在互动中成长</h2>
+            <p class="cta-subtitle">四大主题任选·全程专业引导·安全有趣</p>
+            <a href="tel:19224280622" class="cta-button">📞 咨询电话：19224280622</a>
+            <a href="#" class="cta-button secondary">📱 扫码添加微信咨询</a>
+            
+            <!-- 微信二维码 -->
+            <div class="wechat-section">
+                <div class="wechat-title">🔍 扫一扫添加微信</div>
+                <img src="https://www.coze.cn/s/pm1pO-lfJm0/?width_height=714x920" alt="微信二维码" class="wechat-qr">
+                <div class="wechat-tips">长按识别二维码 · 立即咨询</div>
+            </div>
+        </div>
+        
+        <!-- 底部 -->
+        <div class="footer">
+            <p>四大昆虫主题全天研学课程</p>
+            <p>四川幼小学专属·互动体验设计</p>
+            <p>让每个孩子都成为自然探索小达人</p>
+        </div>
+    </div>
+</body>
+</html>
